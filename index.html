@@ -1,20 +1,42 @@
 <!DOCTYPE html>
 <html>
-  <head>
-  <script>
-    var request = new XMLHttpRequest();
- 
-    request.open('GET', 'https://jsonplaceholder.typicode.com/users/1', true);
-    request.responseType = 'json';
- 
-    request.onload = function () {
-      var data = this.response;
-      console.log(data);
-    };
- 
-    request.send();
+<head>
+  <meta charset="utf-8" />
+  <title></title>
+
+  <script type="text/javascript">
+
+    function onButtonClick() {
+      var str1 = document.getElementById("text1").value;
+      var str2 = document.getElementById("text2").value;
+      callAdd(str1,str2);
+    }
+
+    function callAdd(value1, value2) {
+      var xmlhttp = new XMLHttpRequest();
+
+      xmlhttp.onreadystatechange = function() {
+        if (xmlhttp.readyState == 4) {
+          if (xmlhttp.status == 200) {
+            var elem = document.getElementById("output");
+            elem.innerText = xmlhttp.responseText;
+          } else {
+            alert("status = " + xmlhttp.status);
+          }
+        }
+      }
+      var url = "https://(WebAPIの配置URL)/RestService/add/" + value1 + "/" + value2;
+      xmlhttp.open("GET", url);
+      xmlhttp.send();
+    }
   </script>
-  </head>
-  <body>
-  </body>
+</head>
+<body>
+  <h2>WCF REST APIのJavaScritp呼び出しデモ</h2>
+
+  Input 1:<input id="text1" type="text" /><br />
+  Input 2:<input id="text2" type="text" /><br />
+  <button onclick="onButtonClick()">API呼び出し</button><br/>
+  Output:<div id="output"></div>
+</body>
 </html>
